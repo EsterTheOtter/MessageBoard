@@ -3,8 +3,6 @@
 
 #include <string>
 
-#include "CharacterClass.hpp"
-
 
 class Program {
     private:
@@ -27,7 +25,7 @@ class Program {
     std::string _getUserInput();
         //setters
     void _setUserInput();
-    inline void _setMenuStatus(bool uInput) {menuStatus == uInput;}
+    void _setMenuStatus(bool uInput);
     //modifiers
 };
 

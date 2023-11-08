@@ -10,52 +10,78 @@
 //functions
 Program::Program() {
     menuStatus = 1;
-};
+}
 
 Program::~Program() {
 
-};
+}
 
 void Program::mainMenu() {
-    //conditional startup- first startup directs to profile creation
+    //*conditional startup- first startup directs to profile creation
     //initialization
     system("cls");
     //runtime
     while (_getMenuStatus() == 1) {
+        //Main Menu
         std::cout << "Welcome... Please select an option:\n\n"
-        << "[1]_Continue last profile\n"
+        << "[1]_Continue last session\n"
         << "[2]_New Profile\n"
         << "[3]_Load Profile\n"
         << "[4]_Options\n"
         << "[5]_Exit\n";
 
         _setUserInput();
-        if (_getUserInput() == "5" || _getUserInput() == "exit") {
+        //Continue last session
+        if (_getUserInput() == "1" || _getUserInput() == "continue" || _getUserInput() == "continue last profile" || _getUserInput() == "last" || _getUserInput() == "last profile" ) {
+            std::cout << "Continue last used profile?\ny/n\n\n";
+            //*proceeds to display information regarding profile: profile name, dates, access time, creation time, etc. to aid in decision to continue- perhapse provide timestamp of profile
+            _setUserInput();
+            if (_getUserInput() == "n") {
+            } else if (_getUserInput() == "y") {
+                continueProfile();
+            }
+        //New Profile
+        } else if (_getUserInput() == "2" || _getUserInput() == "new" || _getUserInput() == "new profile") {
+            std::cout << "Create a new profile?\ny/n\n\n";
+            _setUserInput();
+            if (_getUserInput() == "n") {
+            } else if (_getUserInput() == "y") {
+                newProfile();
+            }
+        //Load Profile
+        } else if (_getUserInput() == "3" || _getUserInput() == "load profile" || _getUserInput() == "load") {
+            loadProfile();
+        //Options
+        } else if (_getUserInput() == "4" || _getUserInput() == "options" || _getUserInput() == "option") {
+            options();
+        //Exit
+        } else if (_getUserInput() == "5" || _getUserInput() == "exit") {
             _setMenuStatus(0);
-            break;
-        };
+        }
     }
-};
+}
 
 void Program::newProfile() {
-
-};
+    std::cout << "Please input profile name:\n";
+    _setUserInput();
+    //*Creates profile: Name, time and date created, and access time should be created and stored in separate file utilizing iomanip
+}
 
 void Program::loadProfile() {
-
-};
+    //*menu interface that displays all saved profiles located at specific folder
+}
 
 void Program::continueProfile() {
-
-};
+    //*menu interface that accessess last used file
+}
 
 void Program::options() {
-
-};
+    //*menu interface that displays options
+}
 
 void Program::exit() {
 
-};
+}
 
 //accessors
     //getters
@@ -73,4 +99,8 @@ void Program::_setUserInput() {
     std::cout << "\n";
     userInput = uInput;
 }
+
+void Program::_setMenuStatus(bool uInput) {
+    menuStatus = uInput;
+};
 //modifiers
