@@ -31,7 +31,7 @@ void Program::mainMenu() {
 
         _setUserInput();
         //Continue last session
-        if (_getUserInput() == "1" || _getUserInput() == "continue" || _getUserInput() == "continue last profile" || _getUserInput() == "last" || _getUserInput() == "last profile" ) {
+        if (_getUserInput() == "1" || _getUserInput() == "continue" || _getUserInput() == "continue last session" || _getUserInput() == "last" || _getUserInput() == "last session" ) {
             std::cout << "Continue last used profile?\ny/n\n\n";
             //*proceeds to display information regarding profile: profile name, dates, access time, creation time, etc. to aid in decision to continue- perhapse provide timestamp of profile
             _setUserInput();

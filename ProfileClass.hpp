@@ -2,6 +2,7 @@
 #define ProfileClass_hpp
 
 #include <string>
+#include <vector>
 
 
 class Profile {
@@ -9,6 +10,7 @@ class Profile {
     bool menuStatus;
     std::string userInput;
     std::string pName;
+    std::vector<char> registeredChars;
     public:
     //operators
     //functions

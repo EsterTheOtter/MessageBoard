@@ -10,6 +10,7 @@
 Profile::Profile(std::string uName) {
     menuStatus = 1;
     pName = uName;
+    registeredChars;
 }
 
 Profile::~Profile() {
@@ -28,7 +29,7 @@ void Profile::runProfile() {
         << "[4]_Exit\n";
 
         _setUserInput();
-        
+
         if (_getUserInput() == "1" || _getUserInput() == "run" || _getUserInput() == "run check" || _getUserInput() == "check") {
             //Run check program
         } else if (_getUserInput() == "2" || _getUserInput() == "create new character" || _getUserInput() == "create new" || _getUserInput() == "create" || _getUserInput() == "new character" || _getUserInput() == "new") {
