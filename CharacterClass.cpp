@@ -6,6 +6,9 @@
 Character::Character() {
 
 }
+Character::~Character() {
+    
+}
 //accessors
     //getters
     //setters

@@ -4,13 +4,18 @@
 
 class Character {
     private:
+    char character;
+    int quantity;
     public:
     //operators
     //functions
     Character();
+    virtual ~Character();
     //accessors
         //getters
         //setters
+    inline void _setCharacter(char uInput) {character = uInput;}
+    inline void _setQuantity(char uInput) {quantity = uInput;}
     //modifiers
 };
 

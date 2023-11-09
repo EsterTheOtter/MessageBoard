@@ -1,9 +1,8 @@
 #include <iostream>
-#include <iomanip>
 #include <Windows.h>
 
 #include "Program.hpp"
-#include "CharacterClass.hpp"
+#include "ProfileClass.hpp"
 
 
 //operators
@@ -62,8 +61,23 @@ void Program::mainMenu() {
 }
 
 void Program::newProfile() {
-    std::cout << "Please input profile name:\n";
-    _setUserInput();
+    std::string uProfileName;
+    while (_getMenuStatus() == 1) {
+        std::cout << "Please input profile name:\n";
+        _setUserInput();
+        uProfileName = _getTrueUserInput();
+        std::cout << "You selected \"" << uProfileName << "\", is this correct?\ny/n\n\n";
+        _setUserInput();
+        if (_getUserInput() == "n") {
+        } else if (_getUserInput() == "y") {
+            _setMenuStatus(0);
+        }
+    }
+    _resetMenu();
+    Profile uProfile(uProfileName);
+    uProfile.runProfile();
+    //*Exports user settings to plain text file
+    
     //*Creates profile: Name, time and date created, and access time should be created and stored in separate file utilizing iomanip
 }
 

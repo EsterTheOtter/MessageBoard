@@ -23,9 +23,13 @@ class Program {
         //getters
     inline bool _getMenuStatus() const {return menuStatus;}
     std::string _getUserInput();
+    //True user input- gets unmodified user input
+    //*Messy, implament manually later down line if no better alternative
+    inline std::string _getTrueUserInput() {return userInput;}
         //setters
     void _setUserInput();
     void _setMenuStatus(bool uInput);
+    inline void _resetMenu() {menuStatus = 1;}
     //modifiers
 };
 
