@@ -1,15 +1,18 @@
 #include <iostream>
-#include <iomanip>
+#include <fstream>
 
 #include "ProfileClass.hpp"
 #include "CharacterClass.hpp"
 
 
+//*Leave open for event handling capabilities later
+
 //operators
 //functions
-Profile::Profile(std::string uName) {
+Profile::Profile(std::string uName, std::string oName) {
     menuStatus = 1;
     pName = uName;
+    orgName = oName;
     registeredChars;
 }
 
@@ -22,7 +25,7 @@ void Profile::runProfile() {
     std::cout << "Initialization complete.\n";
 
     while(_getMenuStatus() == 1) {
-        std::cout << "Welcome SMCSC Member! What would you like to do?\n\n"
+        std::cout << "Welcome " << pName << "! What would you like to do?\n\n"
         << "[1]_Run check\n"
         << "[2]_Create new character\n"
         << "[3]_Modify existing character\n"
@@ -50,10 +53,33 @@ void Profile::runProfile() {
     //Save
     //Load
     //Characters
+        //Character creation
 void Profile::createCharacter() {
-    std::cout << "Please input the character you wish to enter:\n";
-    _setUserInput();
-    //*Run check to ensure user does not duplicate already existing character
+    while (_getMenuStatus()) {
+        std::cout << "Please input the character you wish to enter:\n";
+        _setUserInput();
+        //*Run check to ensure user does not duplicate already existing character
+        std::string userInput = _getUserInput();
+        char charInput = userInput[0];
+        if (characterCheck(charInput)) {
+            std::cout << charInput << " already exists in the current library.\nWould you like to input a new entry?\ny/n\n\n";
+            _setUserInput();
+            if(_getUserInput() == "n") {
+                _setMenuStatus(0);
+            } else if (_getUserInput() == "y") {
+            }
+        }
+    }
+    _resetMenu();
+}
+        //Character check
+bool Profile::characterCheck(char uInput) {
+    for (int i = 0; i < registeredChars.size(); i++) {
+        if (uInput == registeredChars[i]) {
+            return true;
+        }
+    }
+    return false;
 }
 //accessors
     //getters
@@ -74,5 +100,5 @@ void Profile::_setUserInput() {
 
 void Profile::_setMenuStatus(bool uInput) {
     menuStatus = uInput;
-};
+}
 //modifiers

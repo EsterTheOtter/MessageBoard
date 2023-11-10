@@ -10,17 +10,21 @@ class Profile {
     bool menuStatus;
     std::string userInput;
     std::string pName;
+    std::string orgName;
     std::vector<char> registeredChars;
     public:
     //operators
     //functions
-    Profile(std::string uName);
+    Profile(std::string uName = "Member", std::string oName = "SMCSC");
     virtual ~Profile();
     void runProfile();
         //Save
         //Load
         //Characters
+            //Character creation
     void createCharacter();
+            //Character check
+    bool characterCheck(char uInput);
     //accessors
         //getters
     inline bool _getMenuStatus() const {return menuStatus;}
