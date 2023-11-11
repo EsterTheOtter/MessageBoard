@@ -6,7 +6,7 @@ int main(int argc, char *argv[]) {
     //initialization
     Program billboardProgram;
     //runtime
-    billboardProgram.mainMenu();
+    billboardProgram.runMainMenu();
 
     return 0;
 }

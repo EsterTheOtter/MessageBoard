@@ -7,32 +7,34 @@
 
 class Profile {
     private:
-    bool menuStatus;
+    bool menuActive;
     std::string userInput;
-    std::string pName;
+    std::string profileName;
     std::string orgName;
     std::vector<char> registeredChars;
     public:
     //operators
     //functions
-    Profile(std::string uName = "Member", std::string oName = "SMCSC");
+    Profile(std::string inputUserName = "Member", std::string inputOrgName = "SMCSC");
     virtual ~Profile();
     void runProfile();
         //Save
         //Load
         //Characters
             //Character creation
-    void createCharacter();
-            //Character check
-    bool characterCheck(char uInput);
+    void createNewCharacter();
+            //Character checks
+    bool isExistingCharacter(char uInput);
+
     //accessors
         //getters
-    inline bool _getMenuStatus() const {return menuStatus;}
+    inline bool _isMenuActive() const {return menuActive;}
     std::string _getUserInput();
         //setters
     void _setUserInput();
-    void _setMenuStatus(bool uInput);
-    inline void _resetMenu() {menuStatus = 1;}
+    inline void _closeMenuStatus() {menuActive = 0;}
+    inline void _openMenuStatus() {menuActive = 1;}
+    void _setRegisteredCharacter(char &userInput, std::vector<char> &charOutput);
     //modifiers
 };
 

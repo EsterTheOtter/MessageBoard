@@ -3,8 +3,9 @@
 
 //operators
 //functions
-Character::Character() {
-
+Character::Character(char userInput) {
+    character = userInput;
+    quantity;
 }
 Character::~Character() {
     

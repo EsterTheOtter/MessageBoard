@@ -9,7 +9,7 @@ class Character {
     public:
     //operators
     //functions
-    Character();
+    Character(char userInput);
     virtual ~Character();
     //accessors
         //getters

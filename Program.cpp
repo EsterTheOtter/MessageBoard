@@ -8,19 +8,19 @@
 //operators
 //functions
 Program::Program() {
-    menuStatus = 1;
+    menuActive = 1;
 }
 
 Program::~Program() {
 
 }
 
-void Program::mainMenu() {
+void Program::runMainMenu() {
     //*conditional startup- first startup directs to profile creation
     //initialization
     system("cls");
     //runtime
-    while (_getMenuStatus() == 1) {
+    while (_isMenuActive()) {
         //Main Menu
         std::cout << "Welcome... Please select an option:\n\n"
         << "[1]_Continue last session\n"
@@ -45,7 +45,7 @@ void Program::mainMenu() {
             _setUserInput();
             if (_getUserInput() == "n") {
             } else if (_getUserInput() == "y") {
-                newProfile();
+                createNewProfile();
             }
         //Load Profile
         } else if (_getUserInput() == "3" || _getUserInput() == "load profile" || _getUserInput() == "load") {
@@ -55,14 +55,14 @@ void Program::mainMenu() {
             options();
         //Exit
         } else if (_getUserInput() == "5" || _getUserInput() == "exit") {
-            _setMenuStatus(0);
+            _closeMenuStatus();
         }
     }
 }
 
-void Program::newProfile() {
+void Program::createNewProfile() {
     std::string uProfileName;
-    while (_getMenuStatus() == 1) {
+    while (_isMenuActive() == 1) {
         std::cout << "Please input profile name:\n";
         _setUserInput();
         uProfileName = _getTrueUserInput();
@@ -70,10 +70,10 @@ void Program::newProfile() {
         _setUserInput();
         if (_getUserInput() == "n") {
         } else if (_getUserInput() == "y") {
-            _setMenuStatus(0);
+            _closeMenuStatus();
         }
     }
-    _resetMenu();
+    _openMenuStatus();
     Profile uProfile(uProfileName);
     uProfile.runProfile();
     //*Exports user settings to plain text file
@@ -113,8 +113,4 @@ void Program::_setUserInput() {
     std::cout << "\n";
     userInput = uInput;
 }
-
-void Program::_setMenuStatus(bool uInput) {
-    menuStatus = uInput;
-};
 //modifiers
