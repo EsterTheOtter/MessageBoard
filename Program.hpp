@@ -2,6 +2,7 @@
 #define Program_hpp
 
 #include <string>
+#include <fstream>
 
 
 class Program {
@@ -18,7 +19,8 @@ class Program {
     void loadProfile();
     void continueProfile();
     void options();
-    void exit();
+    void systemException();
+    void userConfirmation();
     //accessors
         //getters
     inline bool _isMenuActive() const {return menuActive;}

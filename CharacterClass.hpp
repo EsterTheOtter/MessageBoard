@@ -18,6 +18,8 @@ class Character {
         //setters
     inline void _setCharacter(char uInput) {character = uInput;}
     inline void _setQuantity(char uInput) {quantity = uInput;}
+    inline void _addQuantity() {quantity+= 1;}
+    inline void _subQuantity() {quantity-= 1;}
     //modifiers
 };
 

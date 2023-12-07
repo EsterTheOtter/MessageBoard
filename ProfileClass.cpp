@@ -5,37 +5,46 @@
 #include "CharacterClass.hpp"
 
 
-//*Leave open for event handling capabilities later
+//*--Leave open for event handling capabilities later
 
-//operators
-//functions
+////        operators       ////
+////        functions       ////
+//Profile Constructor
 Profile::Profile(std::string inputUserName, std::string inputOrgName) {
     menuActive = 1;
     profileName = inputUserName;
     orgName = inputOrgName;
-    registeredChars[7];
+    registeredChars;
+    charsQuantities;
 }
 
+//Profile Destructor
 Profile::~Profile() {
 }
 
-void Profile::runProfile() {
+/*Hosts/Runs the profile interface and logic
+    function: runProfile_Menu
+    param: none
+    return: void
+*/
+void Profile::runProfile_Menu() {
     std::cout << "Initializing assets...\n";
-    //*Initialize here
+    //*--Initialize here
     std::cout << "Initialization complete.\n";
     system("cls");
 
     while(_isMenuActive() == 1) {
+        //*--Main Menu
         std::cout << "Welcome " << profileName << "! What would you like to do?\n\n"
         << "[1]_Run check\n"
         << "[2]_Create new character\n"
         << "[3]_Modify existing character\n"
         << "[4]_Exit\n";
 
-        _setUserInput();
-
-        if (_getUserInput() == "1" || _getUserInput() == "run" || _getUserInput() == "run check" || _getUserInput() == "check") {
-            //Run check program
+        set_user_response();
+        //*--Checks user's decision
+        if (retrieve_user_response() == "1" || retrieve_user_response() == "run" || retrieve_user_response() == "run check" || retrieve_user_response() == "check") {
+            //*--Displays existing characters if any are present
             if (registeredChars.size() == 0) {
                 std::cout << "There are currently no existing characters.\n";
                 system("pause");
@@ -46,16 +55,25 @@ void Profile::runProfile() {
                     std::cout << registeredChars[i] << "\n";
                 }
             }
-        } else if (_getUserInput() == "2" || _getUserInput() == "create new character" || _getUserInput() == "create new" || _getUserInput() == "create" || _getUserInput() == "new character" || _getUserInput() == "new") {
-            std::cout << "Would you like to create a new character?\ny/n\n\n";
-            _setUserInput();
-            if (_getUserInput() == "n") {
-            } else if (_getUserInput() == "y") {
-                createNewCharacter();
+        //*--Process new character creation request, 1. runProfile_createCharacter()
+        } else if (retrieve_user_response() == "2" || retrieve_user_response() == "create new character" || retrieve_user_response() == "create new" || retrieve_user_response() == "create" || retrieve_user_response() == "new character" || retrieve_user_response() == "new") {
+            while (_isMenuActive()) {
+                std::cout << "Would you like to create a new character?\ny/n\n\n";
+                set_user_response();
+                if (retrieve_user_response() == "n") {
+                } else if (retrieve_user_response() == "y") {
+                    runProfile_createCharacter();
+                    break;
+                } else {
+                    systemException();
+                    std::cout << "Improper user response.\n";
+                }
             }
-        } else if (_getUserInput() == "3" || _getUserInput() == "modify existing character" || _getUserInput() == "modify existing" || _getUserInput() == "modify" || _getUserInput() == "existing character" || _getUserInput() == "existing") {
-            //Modify existing character
-        } else if (_getUserInput() == "4" || _getUserInput() == "exit") {
+        } else if (retrieve_user_response() == "3" || retrieve_user_response() == "modify existing character" || retrieve_user_response() == "modify existing" || retrieve_user_response() == "modify" || retrieve_user_response() == "existing character" || retrieve_user_response() == "existing") {
+        //*--Modify existing character properties
+        std::cout << "Placeholder\n";
+        //*--Returns back to main menu, 1. _closeMenuStatus()
+        } else if (retrieve_user_response() == "4" || retrieve_user_response() == "exit") {
             _closeMenuStatus();
         }
         continue;
@@ -64,35 +82,73 @@ void Profile::runProfile() {
 }
     //Save
     //Load
-    //Characters
-        //Character creation
-void Profile::createNewCharacter() {
+    /*Loads profile data from a local .dat file
+
+        function: loadProfile
+        param: none
+        return: void
+    */
+void Profile::loadProfile() {
+    //*Pulls from .dat file
+}
+    //Character functions
+        /*Create new character object
+
+        function: runProfile_createCharacter
+        param: none
+        return: void
+        */
+void Profile::runProfile_createCharacter() {
     while (_isMenuActive()) {
+        repeat:
+        //*--requests desired character
         std::cout << "Please input the character you wish to enter:\n";
-        _setUserInput();
-        //*Run check to ensure user does not duplicate already existing character
-        std::string userInput = _getUserInput();
+        set_user_response();
+        std::string userInput = retrieve_user_response();
         char charInput = userInput[0];
-        //Check
+        /*Run check to ensure user does not duplicate already existing character
+        param: isExistingCharacter, bool- does the user-submitted character already exist? y/n?
+        */
+       while(_isMenuActive()) {
         if (isExistingCharacter(charInput)) {
-            std::cout << charInput << " already exists in the current library.\nWould you still like to input a new entry?\ny/n\n\n";
-            _setUserInput();
-            if(_getUserInput() == "n") {
+            std::cout << "Sorry, \"" <<  charInput << " \" already exists in the current library.\nWould you still like to input a new entry?\ny/n\n\n";
+            set_user_response();
+            if (retrieve_user_response() == "n") {
                 _closeMenuStatus();
-            } else if (_getUserInput() == "y") {
                 break;
+            } else if (retrieve_user_response() == "y") {
+                _closeMenuStatus();
+                continue;
+            } else {
+                systemException();
+                std::cout << "Please enter a proper response\n";
+            }
+        } else {
+            _openMenuStatus();
+            //*
+            Character character(charInput);
+            character._addQuantity();
+            _registerCharacter(charInput, registeredChars);
+            while(_isMenuActive()) {
+                std::cout << "The character " << character._getCharacter() << " has been added. Would you like to enter another character?\ny/n\n\n";
+                set_user_response();
+                if (retrieve_user_response() == "n") {
+                    _closeMenuStatus();
+                } else if (retrieve_user_response() == "y") {
+                    goto repeat;
+                } else {
+                    std::cout << "Please enter a proper response.\n";
+                }
             }
         }
-        Character character(charInput);
-        std::cout << "Would you like to enter a new character?\ny/n\n\n";
-        _setUserInput();
-        if (_getUserInput() == "n") {
-            _closeMenuStatus();
-        } else {
-            continue;
-        }
+        _closeMenuStatus();
+       }
     }
     _openMenuStatus();
+}
+        //Add Character
+void Profile::_updateCharacter() {
+
 }
         //Character checks
 bool Profile::isExistingCharacter(char uInput) {
@@ -103,16 +159,21 @@ bool Profile::isExistingCharacter(char uInput) {
     }
     return false;
 }
-//accessors
+
+void Profile::systemException() {
+    std::cout << "System Exception: \n";
+}
+
+////        accessors       ////
     //getters
-    std::string Profile::_getUserInput() {
+    std::string Profile::retrieve_user_response() {
     for (auto& i : userInput) {
         i = tolower(i);
     }
     return userInput;
 }
     //setters
-void Profile::_setUserInput() {
+void Profile::set_user_response() {
     std::string uInput = " ";
     std::cout << "User: ";
     getline(std::cin, uInput);
@@ -120,14 +181,7 @@ void Profile::_setUserInput() {
     userInput = uInput;
 }
 
-//* Needs rework, don't use
-void Profile::_setRegisteredCharacter(char &userInput, std::vector<char> &registeredChars) {
-    if (registeredChars.size() <= 1) {
-        registeredChars.push_back(userInput);
-        
-    }
-    for (int i = 0; i < registeredChars.size(); i++) {
-        registeredChars[i] = userInput;
-    }
+void Profile::_registerCharacter(char userInput, std::vector<char> &outputCharVector) {
+    outputCharVector.push_back(userInput);
 }
-//modifiers
+////        modifiers       ////

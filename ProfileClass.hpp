@@ -12,30 +12,34 @@ class Profile {
     std::string profileName;
     std::string orgName;
     std::vector<char> registeredChars;
+    int charsQuantities;
     public:
-    //operators
-    //functions
+    ////        operators       ////
+    ////        functions       ////
     Profile(std::string inputUserName = "Member", std::string inputOrgName = "SMCSC");
     virtual ~Profile();
-    void runProfile();
+    void runProfile_Menu();
         //Save
         //Load
+    void loadProfile();
         //Characters
             //Character creation
-    void createNewCharacter();
+    void runProfile_createCharacter();
             //Character checks
     bool isExistingCharacter(char uInput);
-
-    //accessors
-        //getters
+    void systemException();
+    ////        accessors       ////
+    //      getters     //
     inline bool _isMenuActive() const {return menuActive;}
-    std::string _getUserInput();
-        //setters
-    void _setUserInput();
+    std::string retrieve_user_response();
+    inline std::string _getProfileName() const {return profileName;}
+    //      setters     //
+    void set_user_response();
     inline void _closeMenuStatus() {menuActive = 0;}
     inline void _openMenuStatus() {menuActive = 1;}
-    void _setRegisteredCharacter(char &userInput, std::vector<char> &charOutput);
-    //modifiers
+    void _registerCharacter(char userInput, std::vector<char> &outputCharVector);
+    void _updateCharacter();
+    ////        modifiers       ////
 };
 
 #endif

@@ -1,5 +1,7 @@
 #include <iostream>
 #include <Windows.h>
+#include <chrono>
+#include <ctime>
 
 #include "Program.hpp"
 #include "ProfileClass.hpp"
@@ -22,6 +24,12 @@ void Program::runMainMenu() {
     //runtime
     while (_isMenuActive()) {
         //Main Menu
+        //* Conditional menu- only display continue if there was a previous session
+        //Conditional checks and Event Logic
+
+
+        //* get from userprofile database
+        //* if (userProfileExists) { below } else if (!userProfileExists) { Options 1 & 2 do not display }
         std::cout << "Welcome... Please select an option:\n\n"
         << "[1]_Continue last session\n"
         << "[2]_New Profile\n"
@@ -41,6 +49,7 @@ void Program::runMainMenu() {
             }
         //New Profile
         } else if (_getUserInput() == "2" || _getUserInput() == "new" || _getUserInput() == "new profile") {
+            system("cls");
             std::cout << "Create a new profile?\ny/n\n\n";
             _setUserInput();
             if (_getUserInput() == "n") {
@@ -63,26 +72,33 @@ void Program::runMainMenu() {
 void Program::createNewProfile() {
     std::string uProfileName;
     while (_isMenuActive() == 1) {
+        system("cls");
         std::cout << "Please input profile name:\n";
         _setUserInput();
         uProfileName = _getTrueUserInput();
-        std::cout << "You selected \"" << uProfileName << "\", is this correct?\ny/n\n\n";
+
+        //form confirmation
+        
+        std::cout << "You selected the profile name \"" << uProfileName << "\", is this correct?\ny/n\n\n";
         _setUserInput();
-        if (_getUserInput() == "n") {
-        } else if (_getUserInput() == "y") {
-            _closeMenuStatus();
-        }
+        userConfirmation();
     }
     _openMenuStatus();
+    std::cout << "Creating user profile...\n";
     Profile uProfile(uProfileName);
-    uProfile.runProfile();
-    //*Exports user settings to plain text file
-    
-    //*Creates profile: Name, time and date created, and access time should be created and stored in separate file utilizing iomanip
+    //* Exports user settings to .dat file using given profile name
+    std::ofstream userProfile;
+    userProfile.open(uProfileName+".dat");
+    //* Creates profile: Name, time and date created, and access time should be created and stored in separate file utilizing fstream
+    auto time_created = std::chrono::system_clock::now();
+    std::cout << "User profile created.\n";
+    std::cout << "Loading user profile... " << uProfile._getProfileName() << "\n";
+    uProfile.runProfile_Menu();
 }
 
 void Program::loadProfile() {
     //*menu interface that displays all saved profiles located at specific folder
+
 }
 
 void Program::continueProfile() {
@@ -93,8 +109,17 @@ void Program::options() {
     //*menu interface that displays options
 }
 
-void Program::exit() {
+void Program::userConfirmation() {
+    if (_getUserInput() == "n") {
+    } else if (_getUserInput() == "y") {
+        _closeMenuStatus();
+    } else {
+        systemException();
+    }
+}
 
+void Program::systemException() {
+    std::cout << "Please input a proper response.\n";
 }
 
 //accessors
